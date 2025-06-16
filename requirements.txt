@@ -1,0 +1,9 @@
+Flask
+torch
+torchvision
+pillow
+pandas
+scikit-learn
+numpy
+tqdm
+requests

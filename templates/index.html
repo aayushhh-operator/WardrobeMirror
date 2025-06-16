@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fashion Product Similarity</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1, h2 {
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    /* Container */
+    form {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    input[type="file"] {
+      border: 2px dashed #3498db;
+      border-radius: 8px;
+      padding: 25px;
+      cursor: pointer;
+      width: 100%;
+      transition: border-color 0.3s ease;
+      background: #eaf4fc;
+    }
+    input[type="file"]:hover {
+      border-color: #2980b9;
+    }
+
+    button {
+      background-color: #3498db;
+      border: none;
+      color: white;
+      padding: 12px 28px;
+      margin-top: 20px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      font-weight: 600;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    /* Uploaded image */
+    .uploaded-image {
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      margin-bottom: 25px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Error message */
+    .error {
+      color: #e74c3c;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* Results */
+    .results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      max-width: 960px;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .result-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.25s ease;
+      cursor: pointer;
+    }
+    .result-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+
+    .result-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .result-card strong {
+      display: block;
+      font-size: 1.1rem;
+      color: #34495e;
+      margin-bottom: 8px;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      form {
+        padding: 20px;
+      }
+      button {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Fashion Product Similarity</h1>
+
+  <form method="POST" enctype="multipart/form-data" novalidate>
+    <input type="file" name="image" accept="image/*" required />
+    <button type="submit">Upload</button>
+  </form>
+
+  {% if uploaded_image %}
+    <h2>Uploaded Image</h2>
+    <img class="uploaded-image" src="{{ uploaded_image }}" alt="Uploaded" />
+  {% endif %}
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  {% if results %}
+    <h2>Top 10 Similar Products</h2>
+    <div class="results">
+      {% for item in results %}
+      <div class="result-card" title="{{ item.product_name }}">
+        <img src="{{ item.feature_image_s3 }}" alt="{{ item.product_name }}" />
+        <strong>{{ item.product_name }}</strong>
+      </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</body>
+</html>

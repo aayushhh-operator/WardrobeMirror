@@ -27,7 +27,8 @@ python app.py
 
 and then click on the local host url to access the web page.
 
---- MY APPROACH ---
+--- 
+## MY APPROACH
 
 The first thing I did was, I cleaned the dataset. The entire code for the cleaning is given in "notebooks\cleaning (1).ipynb".
 

@@ -1,5 +1,1 @@
-Flask
-torch
-numpy
-pillow
-requests
+
